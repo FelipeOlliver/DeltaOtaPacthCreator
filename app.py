@@ -97,6 +97,10 @@ class App(QWidget):
         self.qLabelPatchFileDir.setGeometry(30, 95, 350, 25)
         self.qLabelPatchFileDir.setText('Save patch to: ')
 
+        self.qLabelEspBoardSelect = QLabel(self)
+        self.qLabelEspBoardSelect.setGeometry(30, 135, 200, 25)
+        self.qLabelEspBoardSelect.setText('ESP board: ')
+
         self.qLineEditBaseFilePath = QLineEdit(self)
         self.qLineEditBaseFilePath.setGeometry(135, 15, 350, 25)
         self.qLineEditBaseFilePath.setText('')
@@ -112,6 +116,11 @@ class App(QWidget):
         self.qLineEditPatchFileDir.setText('')
         self.qLineEditPatchFileDir.setReadOnly(True)
 
+        self.qLineChooseESPBoard = QLineEdit(self)
+        self.qLineChooseESPBoard.setGeometry(105, 135, 100, 25)
+        self.qLineChooseESPBoard.setText('')
+        self.qLineChooseESPBoard.setReadOnly(True)
+
         self.qPushButtonBaseFilePath = QPushButton('&Browse...', self)
         self.qPushButtonBaseFilePath.setToolTip('Select the base firmware')
         self.qPushButtonBaseFilePath.setGeometry(500, 15, 100, 25)
@@ -123,7 +132,6 @@ class App(QWidget):
         self.qPushButtonNewFilePath.setGeometry(500, 55, 100, 25)
         self.qPushButtonNewFilePath.clicked.connect(self.newFirmwareOpen)
 
-
         self.qPushButtonPatchFileDir = QPushButton('&Browse...', self)
         self.qPushButtonPatchFileDir.setToolTip('Select the folder for saving the generated patch:')
         self.qPushButtonPatchFileDir.setGeometry(500, 95, 100, 25)
@@ -131,12 +139,12 @@ class App(QWidget):
 
         self.qPushButtonGenerate = QPushButton('&Generate patch', self)
         self.qPushButtonGenerate.setToolTip('Generate patch file')
-        self.qPushButtonGenerate.setGeometry(30, 135, 100, 25)
+        self.qPushButtonGenerate.setGeometry(215, 135, 100, 25)
         self.qPushButtonGenerate.clicked.connect(self.generate)
 
         self.qPushButtonCancel = QPushButton('&Cancel', self)
         self.qPushButtonCancel.setToolTip('Cancel operation')
-        self.qPushButtonCancel.setGeometry(135, 135, 100, 25)
+        self.qPushButtonCancel.setGeometry(320, 135, 100, 25)
         self.qPushButtonCancel.clicked.connect(self.cancel)
         self.qPushButtonCancel.setShortcut("Esc")
 
