@@ -39,10 +39,6 @@ def check_requirements():
         os.system("winget install Microsoft.VisualStudio.2022.BuildTools")
         os.system("pip install detools")
 
-
-
-
-
 def create_patch(chip: str, base_binary: str, new_binary: str, patch_file_name: str) -> None:
     cmd = "esptool --chip " + chip + " image_info " + base_binary
     proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=True)
