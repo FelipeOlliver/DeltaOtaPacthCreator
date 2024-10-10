@@ -48,7 +48,6 @@ def create_patch(chip: str, base_binary: str, new_binary: str, patch_file_name: 
     proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=True)
     (out, err) = proc.communicate()
     x = re.search(b"Validation Hash: ([A-Za-z0-9]+) \(valid\)", out)
-    print(x)
 
     os.system("detools create_patch -c heatshrink " + base_binary + " " + new_binary + " " + patch_file_name)
     patch_file_without_header = "patch_file_temp.bin"
@@ -75,6 +74,7 @@ class App(QWidget):
         self.baseFirmware = ''
         self.NewFirmware = ''
         self.patchFileName = ''
+        self.espBoard = 'esp32c3'
 
         self.setFixedSize(QSize(630, 350))
 
@@ -116,10 +116,9 @@ class App(QWidget):
         self.qLineEditPatchFileDir.setText('')
         self.qLineEditPatchFileDir.setReadOnly(True)
 
-        self.qLineChooseESPBoard = QLineEdit(self)
-        self.qLineChooseESPBoard.setGeometry(105, 135, 100, 25)
-        self.qLineChooseESPBoard.setText('')
-        self.qLineChooseESPBoard.setReadOnly(True)
+        self.qComboChooseESPBoard = QComboBox(self)
+        self.qComboChooseESPBoard.setGeometry(105, 135, 100, 25)
+        self.qComboChooseESPBoard.addItems(['esp32c3', 'esp32', 'esp32s3', 'esp32c6', 'esp32p4', 'esp32s2', 'esp32c6l', 'esp32c5', 'esp32c2', 'esp32h2'])
 
         self.qPushButtonBaseFilePath = QPushButton('&Browse...', self)
         self.qPushButtonBaseFilePath.setToolTip('Select the base firmware')
@@ -210,7 +209,8 @@ class App(QWidget):
                     print("Generate patch")
                     try:
                         check_requirements()
-                        create_patch('esp32c3', self.baseFirmwarePath, self.NewFirmwarePath, self.patchFileName)
+                        self.espBoard = self.qComboChooseESPBoard.currentText()
+                        create_patch(self.espBoard, self.baseFirmwarePath, self.NewFirmwarePath, self.patchFileName)
                         os.system("move " + self.patchFileName + " " + self.patchFolderPath)
                         self.qPlainTextEdit.setPlainText(self.qPlainTextEdit.toPlainText() + datetime.now().strftime(
                             "%H:%M:%S") + ' - ' + "Patch file created.\n")
